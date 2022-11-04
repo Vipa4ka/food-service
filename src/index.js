@@ -1,9 +1,11 @@
 import cardTpl from './templates/cards.hbs';
 import './styles.css';
-import './images/sprite.svg'
+import './images/sprite.svg';
 import cards from './menu.json';
 
 console.log(cardTpl(cards[0]));
+console.log('example');
+
 
 
 // const listEl = document.querySelector('js-menu');

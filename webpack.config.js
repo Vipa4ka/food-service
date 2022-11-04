@@ -1,63 +1,43 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const HandlebarsPlugin = require("handlebars-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  mode: "development",
+  mode: 'development',
   entry: './src/index.js',
   output: {
+    filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'food-service.js',
   },
   module: {
     rules: [
       {
         test: /\.css$/i,
-       use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.m?js$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      }, 
-      {
-        test: /\.(gif|png|jpe?g|svg)$/i,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              name: '[path][name].[ext]',
-              limit: 8192,
-              esModule: false,
-            },
-          },
-          'img-loader',
-        ],
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
       },
-      
-      // {
-      //   test: /\.(png|svg|jpg|jpeg|gif)$/i,        
-      //   use: 'raw-loader',
-      // },
-      
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
       {
         test: /\.hbs$/,
         use: 'handlebars-loader',
       },
-    
-      
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: 'src/index.html' }),
-    // new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
+    }),
     new CleanWebpackPlugin(),
-   
-    
+    new CopyPlugin({
+      patterns: [{ from: './src/images', to: 'images' }],
+    }),
   ],
-  devServer: { 
-    port: 9000,
-    open: true,
-  }
 };
