@@ -15,7 +15,7 @@ const Theme = {
   DARK: 'dark-theme',
 };
 
-populateTheme();
+// populateTheme();
 
 const themeLocal = localStorage.getItem('theme') || Theme.LIGHT;
 themeBody.classList.add(themeLocal);
@@ -28,4 +28,10 @@ function onRenderCards(img) {
     return img.map(cardTpl).join('');
 }
 
+
+function onClickBtnTheme() {
+    themeBody.classList.toggle(Theme.LIGHT);
+    themeBody.classList.toggle(Theme.DARK);
+    localStorage.setItem('theme', themeBody.classList);    
+};
 
