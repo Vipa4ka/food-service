@@ -4,36 +4,28 @@ import './images/sprite.svg';
 import cards from './menu.json';
 
 const listEl = document.querySelector('.js-menu');
-const thema = document.querySelector('body');
+const themeBody = document.querySelector('body');
+const toggleBtnTheme = document.querySelector('.theme-switch__toggle');
 const renderCards = onRenderCards(cards);
-const toggleBtnTheme = document.querySelector('.theme-switch__control');
 listEl.insertAdjacentHTML('afterbegin', renderCards);
-toggleBtnTheme.addEventListener('click', onClickBtnTheme);
+toggleBtnTheme.addEventListener('change', onClickBtnTheme);
 
-thema.classList.toggle('light-theme')
+const Theme = {
+  LIGHT: 'light-theme',
+  DARK: 'dark-theme',
+};
 
-// function onClickBtnTheme() {
-//        console.log(thema.classList);
-//     thema.classList.toggle('light-theme')
+populateTheme();
 
-//     // if (thema.classList.contains('light-theme')) {
-//     //     thema.classList.toggle('dark-theme');
-//     //     //  thema.classList.remove('light-theme')  
-        
+const themeLocal = localStorage.getItem('theme') || Theme.LIGHT;
+themeBody.classList.add(themeLocal);
+toggleBtnTheme.checked = themeLocal === Theme.DARK;
 
-//     // } else if (thema.classList.contains('dark-theme')) {
-//     //     // thema.classList.remove('dark-theme');
-//     //     // thema.classList.add('light-theme');
-//     //     thema.classList.toggle('light-theme');
-        
-//     // }
 
-    
-// }
+
 
 function onRenderCards(img) {
-    //  thema.classList.add('light-theme');
     return img.map(cardTpl).join('');
-    
-    
 }
+
+
